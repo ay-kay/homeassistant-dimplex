@@ -293,10 +293,74 @@ class DimplexApiClient:
         _LOGGER.debug("Writing variable %s = %s", variable_id, value)
         return await self._api_request("POST", endpoint, data)
 
-    async def set_ventilation_bypass(self, enabled: bool) -> dict[str, Any]:
-        """Set ventilation bypass switch."""
-        from .const import VarID
-        return await self.write_variable(VarID.VENTILATION_BYPASS_SWITCH, 1 if enabled else 0)
+    async def set_ventilation_bypass(self, enabled: bool) -> bool:
+        """Set ventilation bypass to the desired state.
+
+        The hardware edge-triggers on writes of 1 to VENTILATION_BYPASS_SWITCH
+        (2212i): each such write flips the bypass regardless of the previous
+        state. The actual state lives in VENT_BYPASS_STATUS (2214i), which
+        reports 0 when off and a non-zero value (observed: 10) when on. After
+        triggering we reset 2212i to 0 so the next write of 1 is detected
+        as a fresh edge.
+        """
+        from .const import (
+            VarID,
+            BYPASS_TOGGLE_POLL_INTERVAL,
+            BYPASS_TOGGLE_TIMEOUT,
+        )
+
+        def _is_active(raw: Any) -> bool | None:
+            if raw is None:
+                return None
+            try:
+                return int(float(raw)) != 0
+            except (ValueError, TypeError):
+                return None
+
+        current_data = await self.read_variables([VarID.VENT_BYPASS_STATUS])
+        current = _is_active(current_data.get(VarID.VENT_BYPASS_STATUS, {}).get("value"))
+
+        if current == enabled:
+            _LOGGER.debug("Bypass already %s, nothing to do", "on" if enabled else "off")
+            return True
+
+        _LOGGER.debug(
+            "Triggering bypass toggle (current=%s, target=%s)",
+            "on" if current else "off",
+            "on" if enabled else "off",
+        )
+        await self.write_variable(VarID.VENTILATION_BYPASS_SWITCH, 1)
+
+        state_changed = False
+        elapsed = 0
+        try:
+            while elapsed < BYPASS_TOGGLE_TIMEOUT:
+                await asyncio.sleep(BYPASS_TOGGLE_POLL_INTERVAL)
+                elapsed += BYPASS_TOGGLE_POLL_INTERVAL
+                data = await self.read_variables([VarID.VENT_BYPASS_STATUS])
+                new_state = _is_active(data.get(VarID.VENT_BYPASS_STATUS, {}).get("value"))
+                if new_state == enabled:
+                    _LOGGER.debug(
+                        "Bypass flipped to %s after %ds",
+                        "on" if enabled else "off",
+                        elapsed,
+                    )
+                    state_changed = True
+                    break
+        finally:
+            try:
+                await self.write_variable(VarID.VENTILATION_BYPASS_SWITCH, 0)
+            except DimplexApiError as err:
+                _LOGGER.warning("Failed to reset bypass trigger flag: %s", err)
+
+        if not state_changed:
+            _LOGGER.warning(
+                "Bypass did not reach state %s within %ds",
+                "on" if enabled else "off",
+                BYPASS_TOGGLE_TIMEOUT,
+            )
+
+        return state_changed
 
     async def set_ventilation_mode(self, mode: int) -> dict[str, Any]:
         """Set ventilation mode (0=Off, 1=Auto, 2=Level1, 3=Level2, 4=Level3)."""

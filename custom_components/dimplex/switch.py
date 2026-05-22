@@ -50,11 +50,18 @@ class DimplexBypassSwitch(CoordinatorEntity[DimplexCoordinator], SwitchEntity):
 
     @property
     def is_on(self) -> bool | None:
-        """Return True if bypass is enabled."""
-        value = self.coordinator.get_value(VarID.VENTILATION_BYPASS_SWITCH)
+        """Return True if bypass is enabled.
+
+        The hardware reports 0 when off and a non-zero value (observed: 10)
+        when the bypass is active, so any non-zero reading counts as on.
+        """
+        value = self.coordinator.get_value(VarID.VENT_BYPASS_STATUS)
         if value is None:
             return None
-        return str(value) == "1"
+        try:
+            return int(float(value)) != 0
+        except (ValueError, TypeError):
+            return None
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the bypass."""

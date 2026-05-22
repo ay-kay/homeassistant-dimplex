@@ -17,6 +17,13 @@ API_USER_AGENT: Final = "QtOAuth/1.0 (+https://www.qt.io)"
 # Polling interval in seconds
 DEFAULT_SCAN_INTERVAL: Final = 60
 
+# Bypass toggle behavior: writing 1 to 2212i edge-triggers a toggle of the
+# bypass state (2214i). The flag must be reset to 0 afterwards so the next
+# write of 1 is detected as a fresh trigger. Since the request travels via
+# the Dimplex cloud, the state change is not immediate.
+BYPASS_TOGGLE_POLL_INTERVAL: Final = 2  # seconds between status reads
+BYPASS_TOGGLE_TIMEOUT: Final = 60  # max seconds to wait for state to flip
+
 # Configuration keys
 CONF_DEVICE_ID: Final = "device_id"
 CONF_ACCESS_TOKEN: Final = "access_token"
