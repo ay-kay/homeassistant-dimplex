@@ -26,26 +26,22 @@ from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-# Regex to extract device ID from various formats
-DEVICE_ID_PATTERN = re.compile(r"sn-UHI-mac-([A-F0-9-]+)", re.IGNORECASE)
+# Regex to extract device ID from various formats (supports sn-*-mac-* pattern)
+DEVICE_ID_PATTERN = re.compile(r"(sn-[^-]+-mac-[A-F0-9-]+)", re.IGNORECASE)
 
 
 def extract_device_id(user_input: str) -> str | None:
     """Extract device ID from user input (URL or direct ID)."""
     user_input = user_input.strip()
 
-    # Check if it's already in the correct format
-    if user_input.startswith("sn-UHI-mac-"):
+    # Check if it's already in the correct sn-*-mac-* format
+    if re.match(r"^sn-[^-]+-mac-[A-F0-9-]+$", user_input, re.IGNORECASE):
         return user_input
 
     # Try to find it in a URL or other string
     match = DEVICE_ID_PATTERN.search(user_input)
     if match:
-        return f"sn-UHI-mac-{match.group(1)}"
-
-    # Check if it looks like just the MAC part
-    if re.match(r"^[A-F0-9-]+$", user_input, re.IGNORECASE):
-        return f"sn-UHI-mac-{user_input}"
+        return match.group(1)
 
     return None
 
@@ -200,51 +196,30 @@ class DimplexConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             if device_id:
                 # If manual input, try to extract proper format
-                if not device_id.startswith("sn-UHI-mac-"):
+                if not re.match(r"^sn-[^-]+-mac-[A-F0-9-]+$", device_id, re.IGNORECASE):
                     device_id = extract_device_id(device_id)
 
                 if device_id is None:
                     errors["device_id_manual"] = "invalid_device_id"
                 else:
-                    # Test connection with the device
-                    try:
-                        session = async_get_clientsession(self.hass)
-                        client = DimplexApiClient(
-                            device_id=device_id,
-                            access_token=self._access_token,
-                            refresh_token=self._refresh_token,
-                            session=session,
-                        )
+                    # Get display name for the title
+                    title = f"Dimplex {device_id[-8:]}"
+                    if self._devices and device_id in self._devices:
+                        dev_info = self._devices[device_id]
+                        title = f"{dev_info['display_name']} ({dev_info['type_name']})"
 
-                        if not await client.test_connection():
-                            errors["base"] = "cannot_connect"
-                        else:
-                            # Get display name for the title
-                            title = f"Dimplex {device_id[-8:]}"
-                            if self._devices and device_id in self._devices:
-                                dev_info = self._devices[device_id]
-                                title = f"{dev_info['display_name']} ({dev_info['type_name']})"
+                    # Create unique ID based on device ID
+                    await self.async_set_unique_id(device_id)
+                    self._abort_if_unique_id_configured()
 
-                            # Create unique ID based on device ID
-                            await self.async_set_unique_id(device_id)
-                            self._abort_if_unique_id_configured()
-
-                            return self.async_create_entry(
-                                title=title,
-                                data={
-                                    "device_id": device_id,
-                                    "access_token": self._access_token,
-                                    "refresh_token": self._refresh_token,
-                                },
-                            )
-
-                    except DimplexAuthError:
-                        errors["base"] = "invalid_auth"
-                    except aiohttp.ClientError:
-                        errors["base"] = "cannot_connect"
-                    except Exception:  # pylint: disable=broad-except
-                        _LOGGER.exception("Unexpected exception")
-                        errors["base"] = "unknown"
+                    return self.async_create_entry(
+                        title=title,
+                        data={
+                            "device_id": device_id,
+                            "access_token": self._access_token,
+                            "refresh_token": self._refresh_token,
+                        },
+                    )
             else:
                 errors["base"] = "no_device_selected"
 
