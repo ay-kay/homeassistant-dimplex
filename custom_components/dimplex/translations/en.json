@@ -176,6 +176,27 @@
       },
       "ventilation_bypass": {
         "name": "Bypass Status"
+      },
+      "energy_total": {
+        "name": "Total Electrical Energy"
+      },
+      "energy_heating": {
+        "name": "Heating Electrical Energy"
+      },
+      "energy_hotwater": {
+        "name": "Hot Water Electrical Energy"
+      },
+      "energy_cooling": {
+        "name": "Cooling Electrical Energy"
+      },
+      "heat_total": {
+        "name": "Total Thermal Energy"
+      },
+      "heat_heating": {
+        "name": "Heating Thermal Energy"
+      },
+      "heat_hotwater": {
+        "name": "Hot Water Thermal Energy"
       }
     },
     "switch": {
@@ -186,6 +207,11 @@
     "select": {
       "ventilation_mode": {
         "name": "Ventilation Level"
+      }
+    },
+    "climate": {
+      "heat_pump": {
+        "name": "Heat Pump"
       }
     }
   }

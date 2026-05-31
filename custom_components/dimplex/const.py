@@ -80,6 +80,17 @@ class VarID:
     WP_STATUS_2: Final = "1500d"
     COMPRESSOR_SPEED: Final = "1472i"
 
+    # Electrical Energy & Heat (Confirmed for LA1728)
+    ENERGY_HEATING: Final = "1385i"     # Electrical energy for heating (kWh)
+    ENERGY_WARMWATER: Final = "1390i"   # Electrical energy for hot water (kWh)
+    HEAT_HEATING: Final = "1475i"       # Thermal energy for heating (kWh)
+    HEAT_WARMWATER: Final = "1482i"     # Thermal energy for hot water (kWh)
+
+    # Fallback/Alternative IDs
+    ENERGY_TOTAL_ALT: Final = "2516i"
+    ENERGY_COOLING_ALT: Final = "1723i"
+    HEAT_TOTAL_ALT: Final = "1480i"
+
 
 # All variable IDs for bulk reading
 ALL_VARIABLE_IDS: Final = [
@@ -119,6 +130,13 @@ ALL_VARIABLE_IDS: Final = [
     VarID.WP_STATUS_1,
     VarID.WP_STATUS_2,
     VarID.COMPRESSOR_SPEED,
+    VarID.ENERGY_HEATING,
+    VarID.ENERGY_WARMWATER,
+    VarID.HEAT_HEATING,
+    VarID.HEAT_WARMWATER,
+    VarID.ENERGY_TOTAL_ALT,
+    VarID.ENERGY_COOLING_ALT,
+    VarID.HEAT_TOTAL_ALT,
 ]
 
 # Status mappings

@@ -75,5 +75,144 @@
       "already_configured": "Device already configured",
       "reauth_successful": "Authentication successful"
     }
+  },
+  "entity": {
+    "sensor": {
+      "temperature_warmwater": {
+        "name": "Hot Water Temperature"
+      },
+      "temperature_return": {
+        "name": "Return Temperature"
+      },
+      "temperature_supply": {
+        "name": "Supply Temperature"
+      },
+      "temperature_hk": {
+        "name": "Heating Circuit Temperature"
+      },
+      "temperature_hk_target": {
+        "name": "Heating Circuit Target Temperature"
+      },
+      "temperature_hk_actual": {
+        "name": "Heating Circuit Actual Temperature"
+      },
+      "temperature_system_target": {
+        "name": "System Target Temperature"
+      },
+      "temperature_system_actual": {
+        "name": "System Actual Temperature"
+      },
+      "temperature_room_target": {
+        "name": "Room Target Temperature"
+      },
+      "temperature_room_actual": {
+        "name": "Room Actual Temperature"
+      },
+      "temperature_dewpoint": {
+        "name": "Dew Point"
+      },
+      "vent_temp_outside": {
+        "name": "Ventilation Outside Air Temperature"
+      },
+      "vent_temp_supply": {
+        "name": "Ventilation Supply Air Temperature"
+      },
+      "vent_temp_exhaust": {
+        "name": "Ventilation Exhaust Air Temperature"
+      },
+      "vent_temp_outgoing": {
+        "name": "Ventilation Outgoing Air Temperature"
+      },
+      "vent_humidity_exhaust": {
+        "name": "Ventilation Exhaust Air Humidity"
+      },
+      "vent_humidity_outside": {
+        "name": "Ventilation Outside Air Humidity"
+      },
+      "vent_voc_exhaust": {
+        "name": "Ventilation Exhaust Air VOC"
+      },
+      "vent_voc_outside": {
+        "name": "Ventilation Outside Air VOC"
+      },
+      "vent_filter_days": {
+        "name": "Ventilation Filter Days Remaining"
+      },
+      "vent_exhaust_flow": {
+        "name": "Ventilation Exhaust Volume Flow"
+      },
+      "vent_supply_flow": {
+        "name": "Ventilation Supply Volume Flow"
+      },
+      "vent_supply_fan_speed": {
+        "name": "Ventilation Supply Fan Speed"
+      },
+      "vent_exhaust_fan_speed": {
+        "name": "Ventilation Exhaust Fan Speed"
+      },
+      "compressor_runtime": {
+        "name": "Compressor Runtime"
+      },
+      "compressor_clocks_total": {
+        "name": "Compressor Cycles Total"
+      },
+      "compressor_clocks_heating": {
+        "name": "Compressor Cycles Heating"
+      },
+      "compressor_clocks_hotwater": {
+        "name": "Compressor Cycles Hot Water"
+      },
+      "compressor_clocks_cooling": {
+        "name": "Compressor Cycles Cooling"
+      },
+      "wp_status": {
+        "name": "Heat Pump Status"
+      },
+      "compressor_status": {
+        "name": "Compressor Status"
+      },
+      "ventilation_mode": {
+        "name": "Ventilation Level"
+      },
+      "ventilation_bypass": {
+        "name": "Bypass Status"
+      },
+      "energy_total": {
+        "name": "Total Electrical Energy"
+      },
+      "energy_heating": {
+        "name": "Heating Electrical Energy"
+      },
+      "energy_hotwater": {
+        "name": "Hot Water Electrical Energy"
+      },
+      "energy_cooling": {
+        "name": "Cooling Electrical Energy"
+      },
+      "heat_total": {
+        "name": "Total Thermal Energy"
+      },
+      "heat_heating": {
+        "name": "Heating Thermal Energy"
+      },
+      "heat_hotwater": {
+        "name": "Hot Water Thermal Energy"
+      }
+    },
+    "switch": {
+      "ventilation_bypass": {
+        "name": "Ventilation Bypass"
+      }
+    },
+    "select": {
+      "ventilation_mode": {
+        "name": "Ventilation Level"
+      }
+    },
+    "climate": {
+      "heat_pump": {
+        "name": "Heat Pump"
+      }
+    }
   }
 }

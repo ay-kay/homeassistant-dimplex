@@ -176,6 +176,27 @@
       },
       "ventilation_bypass": {
         "name": "Bypass Status"
+      },
+      "energy_total": {
+        "name": "Elektrische Energie Gesamt"
+      },
+      "energy_heating": {
+        "name": "Elektrische Energie Heizung"
+      },
+      "energy_hotwater": {
+        "name": "Elektrische Energie Warmwasser"
+      },
+      "energy_cooling": {
+        "name": "Elektrische Energie Kühlung"
+      },
+      "heat_total": {
+        "name": "Thermische Energie Gesamt"
+      },
+      "heat_heating": {
+        "name": "Thermische Energie Heizung"
+      },
+      "heat_hotwater": {
+        "name": "Thermische Energie Warmwasser"
       }
     },
     "switch": {
@@ -186,6 +207,11 @@
     "select": {
       "ventilation_mode": {
         "name": "Lüftungsstufe"
+      }
+    },
+    "climate": {
+      "heat_pump": {
+        "name": "Wärmepumpe"
       }
     }
   }
