@@ -52,6 +52,7 @@ class DimplexWaterHeater(CoordinatorEntity[DimplexCoordinator], WaterHeaterEntit
     _attr_operation_list = [OPERATION_ON, OPERATION_OFF]
     _attr_min_temp = 30.0
     _attr_max_temp = 65.0
+    _attr_target_temperature_step = 1.0  # the setpoint (1042i) is whole degrees
 
     def __init__(self, coordinator: DimplexCoordinator) -> None:
         """Initialize the water heater entity."""

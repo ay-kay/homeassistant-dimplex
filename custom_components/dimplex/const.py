@@ -75,8 +75,10 @@ class VarID:
     COMPRESSOR_CLOCKS_COOLING: Final = "1495i"
     
     # Hot water
-    WW_SETPOINT: Final = "1042i"   # P_WW_SOLL - hot water setpoint (degC)
-    WW_BLOCK_EXT: Final = "771d"   # WW_Sp_Ext - external hot water block
+    WW_SETPOINT: Final = "1042i"        # P_WW_SOLL - hot water setpoint (degC)
+    WW_BLOCK_EXT: Final = "771d"        # WW_Sp_Ext - external hot water block
+    WW_REQUEST_STATUS: Final = "1592i"  # Anz_Anf_Ww - request/block status
+    WW_ACTIVE: Final = "1482d"          # c_WW_aktiv - hot water currently active
 
     # Climate control (room-regulated heating circuit 1)
     # 502a is the base room setpoint (a plain degC float). Note 1629i is the
@@ -171,6 +173,8 @@ ALL_VARIABLE_IDS: Final = [
     VarID.ENV_ENERGY_RES_HIGH,
     VarID.WW_SETPOINT,
     VarID.WW_BLOCK_EXT,
+    VarID.WW_REQUEST_STATUS,
+    VarID.WW_ACTIVE,
 ]
 
 # Status mappings
@@ -200,6 +204,17 @@ OPERATING_MODE_MAP: Final = {
 
 # Reverse mapping for setting the operating mode
 OPERATING_MODE_TO_VALUE: Final = {v: k for k, v in OPERATING_MODE_MAP.items()}
+
+WW_REQUEST_STATUS_MAP: Final = {
+    "0": "No request",
+    "1": "Request",
+    "2": "Blocked",
+}
+
+WW_ACTIVE_MAP: Final = {
+    "0": "Off",
+    "1": "On",
+}
 
 VENTILATION_MODE_MAP: Final = {
     "0": "Off",

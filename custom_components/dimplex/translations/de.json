@@ -205,6 +205,12 @@
       },
       "environmental_energy_resettable": {
         "name": "Umweltenergie (rücksetzbar)"
+      },
+      "hot_water_status": {
+        "name": "Warmwasser-Status"
+      },
+      "hot_water_active": {
+        "name": "Warmwasser aktiv"
       }
     },
     "switch": {
