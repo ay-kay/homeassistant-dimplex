@@ -96,6 +96,39 @@ class DimplexCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             )
             return default
 
+    def get_combined_value(
+        self,
+        low_variable_id: str,
+        high_variable_id: str,
+        scale: float = 1.0,
+        default: Any = None,
+    ) -> Any:
+        """Get a value split across a low word (0-9999) and a high word.
+
+        Some energy/heat counters wrap at 9999 and store the overflow in a
+        separate high-word register (in steps of 10000). The real value is
+        ``high * 10000 + low``.
+        """
+        low = self.get_value(low_variable_id)
+        if low is None:
+            return default
+
+        high = self.get_value(high_variable_id) or 0
+        try:
+            combined = int(high) * 10000 + int(low)
+        except (TypeError, ValueError) as err:
+            _LOGGER.debug(
+                "Error combining values for %s/%s: %s",
+                low_variable_id,
+                high_variable_id,
+                err,
+            )
+            return default
+
+        if scale != 1.0:
+            return combined * scale
+        return combined
+
     def get_mapped_value(
         self,
         variable_id: str,

@@ -41,6 +41,7 @@ class DimplexSensorEntityDescription(SensorEntityDescription):
     variable_id: str
     scale: float = 1.0
     value_map: dict[str, str] | None = None
+    high_variable_id: str | None = None
 
 
 SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
@@ -306,6 +307,16 @@ SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
+    # Environmental energy (low/high word pair to avoid 9999 overflow)
+    DimplexSensorEntityDescription(
+        key="energy_environment_total",
+        variable_id=VarID.ENERGY_ENVIRONMENT_TOTAL_LOW,
+        high_variable_id=VarID.ENERGY_ENVIRONMENT_TOTAL_HIGH,
+        scale=1.0,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
     # Heat quantity sensors
     DimplexSensorEntityDescription(
         key="heat_heating",
@@ -391,6 +402,13 @@ class DimplexSensor(CoordinatorEntity[DimplexCoordinator], SensorEntity):
             return self.coordinator.get_mapped_value(
                 desc.variable_id,
                 desc.value_map,
+            )
+
+        if desc.high_variable_id:
+            return self.coordinator.get_combined_value(
+                desc.variable_id,
+                desc.high_variable_id,
+                scale=desc.scale,
             )
 
         return self.coordinator.get_value(

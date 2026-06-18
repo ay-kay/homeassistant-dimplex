@@ -197,6 +197,9 @@
       },
       "heat_hotwater": {
         "name": "Thermische Energie Warmwasser"
+      },
+      "energy_environment_total": {
+        "name": "Umweltenergie Gesamt"
       }
     },
     "switch": {

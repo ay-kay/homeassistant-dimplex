@@ -79,6 +79,13 @@ class VarID:
     HEAT_HEATING: Final = "1475i"       # Thermal energy for heating (kWh)
     HEAT_WARMWATER: Final = "1482i"     # Thermal energy for hot water (kWh)
 
+    # Energy/heat counters that overflow at 9999 are split into a low word
+    # (0-9999) and a separate high word (x10000 steps). The real value is
+    # high * 10000 + low. Confirmed pair (matches the "Umweltenergie gesamt"
+    # value shown in the Dimplex app):
+    ENERGY_ENVIRONMENT_TOTAL_LOW: Final = "1644i"   # Environmental energy total, low word (kWh)
+    ENERGY_ENVIRONMENT_TOTAL_HIGH: Final = "1645i"  # Environmental energy total, high word (x10000 kWh)
+
     # Fallback/Alternative IDs
     ENERGY_TOTAL_ALT: Final = "2516i"
     ENERGY_COOLING_ALT: Final = "1723i"
@@ -127,6 +134,8 @@ ALL_VARIABLE_IDS: Final = [
     VarID.ENERGY_WARMWATER,
     VarID.HEAT_HEATING,
     VarID.HEAT_WARMWATER,
+    VarID.ENERGY_ENVIRONMENT_TOTAL_LOW,
+    VarID.ENERGY_ENVIRONMENT_TOTAL_HIGH,
     VarID.ENERGY_TOTAL_ALT,
     VarID.ENERGY_COOLING_ALT,
     VarID.HEAT_TOTAL_ALT,
