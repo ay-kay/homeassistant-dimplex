@@ -82,6 +82,26 @@ class VarID:
     ROOM_TEMP_HK1: Final = "1632i"  # Hk1_Raum_Temp - actual room temperature (x0.1)
     OPERATING_MODE: Final = "714i"  # BA_aktiv - persistent operating mode (Betriebsart)
 
+    # Heat/energy meters (thermal kWh). Each counter is split across a low word
+    # (0-9999) and a high word (x10000 steps): value = high * 10000 + low.
+    HEAT_TOTAL_LOW: Final = "1660i"        # heat pump total (heating + hot water)
+    HEAT_TOTAL_HIGH: Final = "1661i"
+    HEAT_HEATING_LOW: Final = "1663i"      # heating
+    HEAT_HEATING_HIGH: Final = "1664i"
+    HEAT_HOTWATER_LOW: Final = "1669i"     # hot water
+    HEAT_HOTWATER_HIGH: Final = "1670i"
+    ENV_ENERGY_LOW: Final = "1644i"        # environmental (ambient) energy
+    ENV_ENERGY_HIGH: Final = "1645i"
+    # Resettable counterparts of the above
+    HEAT_TOTAL_RES_LOW: Final = "1672i"
+    HEAT_TOTAL_RES_HIGH: Final = "1673i"
+    HEAT_HEATING_RES_LOW: Final = "1675i"
+    HEAT_HEATING_RES_HIGH: Final = "1676i"
+    HEAT_HOTWATER_RES_LOW: Final = "1681i"
+    HEAT_HOTWATER_RES_HIGH: Final = "1682i"
+    ENV_ENERGY_RES_LOW: Final = "1647i"
+    ENV_ENERGY_RES_HIGH: Final = "1648i"
+
     # Status
     SMARTGRID: Final = "1246d"
     WP_STATUS_1: Final = "1586i"
@@ -129,6 +149,22 @@ ALL_VARIABLE_IDS: Final = [
     VarID.COMPRESSOR_SPEED,
     VarID.ROOM_TEMP_HK1,
     VarID.OPERATING_MODE,
+    VarID.HEAT_TOTAL_LOW,
+    VarID.HEAT_TOTAL_HIGH,
+    VarID.HEAT_HEATING_LOW,
+    VarID.HEAT_HEATING_HIGH,
+    VarID.HEAT_HOTWATER_LOW,
+    VarID.HEAT_HOTWATER_HIGH,
+    VarID.ENV_ENERGY_LOW,
+    VarID.ENV_ENERGY_HIGH,
+    VarID.HEAT_TOTAL_RES_LOW,
+    VarID.HEAT_TOTAL_RES_HIGH,
+    VarID.HEAT_HEATING_RES_LOW,
+    VarID.HEAT_HEATING_RES_HIGH,
+    VarID.HEAT_HOTWATER_RES_LOW,
+    VarID.HEAT_HOTWATER_RES_HIGH,
+    VarID.ENV_ENERGY_RES_LOW,
+    VarID.ENV_ENERGY_RES_HIGH,
 ]
 
 # Status mappings
