@@ -13,6 +13,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
+    UnitOfEnergy,
     UnitOfTemperature,
     UnitOfTime,
     UnitOfVolumeFlowRate,
@@ -40,6 +41,9 @@ class DimplexSensorEntityDescription(SensorEntityDescription):
     variable_id: str
     scale: float = 1.0
     value_map: dict[str, str] | None = None
+    # When set, the value is combined from a low word (variable_id) and this
+    # high word: value = high * 10000 + low (see coordinator.get_combined_value).
+    high_variable_id: str | None = None
 
 
 SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
@@ -280,6 +284,77 @@ SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
         variable_id=VarID.VENT_BYPASS_STATUS,
         icon="mdi:valve",
     ),
+    # Heat/energy meters (thermal kWh, combined from low/high register pairs)
+    DimplexSensorEntityDescription(
+        key="heat_total",
+        variable_id=VarID.HEAT_TOTAL_LOW,
+        high_variable_id=VarID.HEAT_TOTAL_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    DimplexSensorEntityDescription(
+        key="heat_heating",
+        variable_id=VarID.HEAT_HEATING_LOW,
+        high_variable_id=VarID.HEAT_HEATING_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    DimplexSensorEntityDescription(
+        key="heat_hotwater",
+        variable_id=VarID.HEAT_HOTWATER_LOW,
+        high_variable_id=VarID.HEAT_HOTWATER_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    DimplexSensorEntityDescription(
+        key="environmental_energy",
+        variable_id=VarID.ENV_ENERGY_LOW,
+        high_variable_id=VarID.ENV_ENERGY_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    # Resettable counterparts (disabled by default to avoid Energy Dashboard
+    # confusion; total_increasing handles the resets if you enable them).
+    DimplexSensorEntityDescription(
+        key="heat_total_resettable",
+        variable_id=VarID.HEAT_TOTAL_RES_LOW,
+        high_variable_id=VarID.HEAT_TOTAL_RES_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_registry_enabled_default=False,
+    ),
+    DimplexSensorEntityDescription(
+        key="heat_heating_resettable",
+        variable_id=VarID.HEAT_HEATING_RES_LOW,
+        high_variable_id=VarID.HEAT_HEATING_RES_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_registry_enabled_default=False,
+    ),
+    DimplexSensorEntityDescription(
+        key="heat_hotwater_resettable",
+        variable_id=VarID.HEAT_HOTWATER_RES_LOW,
+        high_variable_id=VarID.HEAT_HOTWATER_RES_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_registry_enabled_default=False,
+    ),
+    DimplexSensorEntityDescription(
+        key="environmental_energy_resettable",
+        variable_id=VarID.ENV_ENERGY_RES_LOW,
+        high_variable_id=VarID.ENV_ENERGY_RES_HIGH,
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        entity_registry_enabled_default=False,
+    ),
 )
 
 
@@ -329,6 +404,13 @@ class DimplexSensor(CoordinatorEntity[DimplexCoordinator], SensorEntity):
             return self.coordinator.get_mapped_value(
                 desc.variable_id,
                 desc.value_map,
+            )
+
+        if desc.high_variable_id:
+            return self.coordinator.get_combined_value(
+                desc.variable_id,
+                desc.high_variable_id,
+                scale=desc.scale,
             )
 
         return self.coordinator.get_value(

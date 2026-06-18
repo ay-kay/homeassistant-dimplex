@@ -181,6 +181,30 @@
       },
       "ventilation_bypass": {
         "name": "Bypass Status"
+      },
+      "heat_total": {
+        "name": "Wärmemenge gesamt"
+      },
+      "heat_heating": {
+        "name": "Wärmemenge Heizen"
+      },
+      "heat_hotwater": {
+        "name": "Wärmemenge Warmwasser"
+      },
+      "environmental_energy": {
+        "name": "Umweltenergie"
+      },
+      "heat_total_resettable": {
+        "name": "Wärmemenge gesamt (rücksetzbar)"
+      },
+      "heat_heating_resettable": {
+        "name": "Wärmemenge Heizen (rücksetzbar)"
+      },
+      "heat_hotwater_resettable": {
+        "name": "Wärmemenge Warmwasser (rücksetzbar)"
+      },
+      "environmental_energy_resettable": {
+        "name": "Umweltenergie (rücksetzbar)"
       }
     },
     "switch": {

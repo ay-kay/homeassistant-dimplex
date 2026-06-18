@@ -86,6 +86,32 @@
       "operating_mode": {
         "name": "Operating Mode"
       }
+    },
+    "sensor": {
+      "heat_total": {
+        "name": "Total Heat Output"
+      },
+      "heat_heating": {
+        "name": "Heating Energy"
+      },
+      "heat_hotwater": {
+        "name": "Hot Water Energy"
+      },
+      "environmental_energy": {
+        "name": "Environmental Energy"
+      },
+      "heat_total_resettable": {
+        "name": "Total Heat Output (resettable)"
+      },
+      "heat_heating_resettable": {
+        "name": "Heating Energy (resettable)"
+      },
+      "heat_hotwater_resettable": {
+        "name": "Hot Water Energy (resettable)"
+      },
+      "environmental_energy_resettable": {
+        "name": "Environmental Energy (resettable)"
+      }
     }
   }
 }
