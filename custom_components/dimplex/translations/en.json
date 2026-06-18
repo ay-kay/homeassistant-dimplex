@@ -222,7 +222,11 @@
     },
     "water_heater": {
       "hot_water": {
-        "name": "Hot Water"
+        "name": "Hot Water",
+        "state": {
+          "heat_pump": "Normal",
+          "off": "Blocked"
+        }
       }
     }
   }

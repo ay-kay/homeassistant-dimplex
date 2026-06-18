@@ -222,7 +222,11 @@
     },
     "water_heater": {
       "hot_water": {
-        "name": "Warmwasser"
+        "name": "Warmwasser",
+        "state": {
+          "heat_pump": "Normal",
+          "off": "Gesperrt"
+        }
       }
     }
   }
