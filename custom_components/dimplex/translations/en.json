@@ -77,6 +77,11 @@
     }
   },
   "entity": {
+    "climate": {
+      "heat_pump": {
+        "name": "Heat Pump"
+      }
+    },
     "sensor": {
       "temperature_warmwater": {
         "name": "Hot Water Temperature"
@@ -186,6 +191,9 @@
     "select": {
       "ventilation_mode": {
         "name": "Ventilation Level"
+      },
+      "operating_mode": {
+        "name": "Operating Mode"
       }
     }
   }
