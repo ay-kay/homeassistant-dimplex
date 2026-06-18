@@ -75,5 +75,17 @@
       "already_configured": "Device already configured",
       "reauth_successful": "Authentication successful"
     }
+  },
+  "entity": {
+    "climate": {
+      "heat_pump": {
+        "name": "Heat Pump"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Operating Mode"
+      }
+    }
   }
 }

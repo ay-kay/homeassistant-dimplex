@@ -29,7 +29,7 @@ CONF_DEVICE_ID: Final = "device_id"
 CONF_ACCESS_TOKEN: Final = "access_token"
 CONF_REFRESH_TOKEN: Final = "refresh_token"
 
-# Variable IDs from reverse engineering
+# Variable IDs
 class VarID:
     """Variable IDs for Dimplex API."""
     # Bypass & Ventilation Control (writable)
@@ -74,6 +74,14 @@ class VarID:
     COMPRESSOR_CLOCKS_HOTWATER: Final = "1493i"
     COMPRESSOR_CLOCKS_COOLING: Final = "1495i"
     
+    # Climate control (room-regulated heating circuit 1)
+    # 502a is the base room setpoint (a plain degC float). Note 1629i is the
+    # EFFECTIVE setpoint = 502a + room-regulation raise (816i), so it reads
+    # higher and must not be used as the writable setpoint.
+    ROOM_SETPOINT_HK1: Final = "502a"
+    ROOM_TEMP_HK1: Final = "1632i"  # Hk1_Raum_Temp - actual room temperature (x0.1)
+    OPERATING_MODE: Final = "714i"  # BA_aktiv - persistent operating mode (Betriebsart)
+
     # Status
     SMARTGRID: Final = "1246d"
     WP_STATUS_1: Final = "1586i"
@@ -119,6 +127,8 @@ ALL_VARIABLE_IDS: Final = [
     VarID.WP_STATUS_1,
     VarID.WP_STATUS_2,
     VarID.COMPRESSOR_SPEED,
+    VarID.ROOM_TEMP_HK1,
+    VarID.OPERATING_MODE,
 ]
 
 # Status mappings
@@ -133,6 +143,21 @@ WP_STATUS_2_MAP: Final = {
     "0": "Off",
     "1": "Active",
 }
+
+# Operating mode (Betriebsart, 714i) - the persistent operating mode.
+# Distinct from WP_STATUS_1 (1586i), which is the current live status.
+OPERATING_MODE_MAP: Final = {
+    "0": "Sommer (nur Warmwasser)",
+    "1": "Winter",
+    "2": "Urlaub",
+    "3": "Party",
+    "4": "2. Wärmeerzeuger",
+    "5": "Kühlen",
+    "6": "Auto",
+}
+
+# Reverse mapping for setting the operating mode
+OPERATING_MODE_TO_VALUE: Final = {v: k for k, v in OPERATING_MODE_MAP.items()}
 
 VENTILATION_MODE_MAP: Final = {
     "0": "Off",
