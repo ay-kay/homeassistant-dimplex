@@ -30,6 +30,8 @@ from .const import (
     WP_STATUS_1_MAP,
     WP_STATUS_2_MAP,
     VENTILATION_MODE_MAP,
+    WW_REQUEST_STATUS_MAP,
+    WW_ACTIVE_MAP,
 )
 from .coordinator import DimplexCoordinator
 
@@ -354,6 +356,19 @@ SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         state_class=SensorStateClass.TOTAL_INCREASING,
         entity_registry_enabled_default=False,
+    ),
+    # Hot water status
+    DimplexSensorEntityDescription(
+        key="hot_water_status",
+        variable_id=VarID.WW_REQUEST_STATUS,
+        value_map=WW_REQUEST_STATUS_MAP,
+        icon="mdi:water-boiler",
+    ),
+    DimplexSensorEntityDescription(
+        key="hot_water_active",
+        variable_id=VarID.WW_ACTIVE,
+        value_map=WW_ACTIVE_MAP,
+        icon="mdi:water-boiler",
     ),
 )
 
