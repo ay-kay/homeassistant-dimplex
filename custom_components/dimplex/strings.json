@@ -112,6 +112,11 @@
       "environmental_energy_resettable": {
         "name": "Environmental Energy (resettable)"
       }
+    },
+    "water_heater": {
+      "hot_water": {
+        "name": "Hot Water"
+      }
     }
   }
 }

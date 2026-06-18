@@ -219,6 +219,11 @@
       "operating_mode": {
         "name": "Operating Mode"
       }
+    },
+    "water_heater": {
+      "hot_water": {
+        "name": "Hot Water"
+      }
     }
   }
 }

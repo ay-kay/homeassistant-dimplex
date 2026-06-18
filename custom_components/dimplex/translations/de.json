@@ -219,6 +219,11 @@
       "operating_mode": {
         "name": "Betriebsart"
       }
+    },
+    "water_heater": {
+      "hot_water": {
+        "name": "Warmwasser"
+      }
     }
   }
 }

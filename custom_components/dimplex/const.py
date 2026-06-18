@@ -74,6 +74,10 @@ class VarID:
     COMPRESSOR_CLOCKS_HOTWATER: Final = "1493i"
     COMPRESSOR_CLOCKS_COOLING: Final = "1495i"
     
+    # Hot water
+    WW_SETPOINT: Final = "1042i"   # P_WW_SOLL - hot water setpoint (degC)
+    WW_BLOCK_EXT: Final = "771d"   # WW_Sp_Ext - external hot water block
+
     # Climate control (room-regulated heating circuit 1)
     # 502a is the base room setpoint (a plain degC float). Note 1629i is the
     # EFFECTIVE setpoint = 502a + room-regulation raise (816i), so it reads
@@ -165,6 +169,8 @@ ALL_VARIABLE_IDS: Final = [
     VarID.HEAT_HOTWATER_RES_HIGH,
     VarID.ENV_ENERGY_RES_LOW,
     VarID.ENV_ENERGY_RES_HIGH,
+    VarID.WW_SETPOINT,
+    VarID.WW_BLOCK_EXT,
 ]
 
 # Status mappings
