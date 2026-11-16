@@ -266,3 +266,9 @@ WP_BLOCK_REASON_MAP: Final = {
     "56": "Flow Max.",
     "57": "Propane sensor communication",
 }
+
+# Fault code (Stoerung_Wert). Only "no fault" is known; unknown codes fall back
+# to the raw number (see coordinator.get_mapped_value).
+WP_FAULT_MAP: Final = {
+    "0": "No fault",
+}

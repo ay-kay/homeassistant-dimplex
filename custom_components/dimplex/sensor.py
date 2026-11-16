@@ -13,6 +13,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
+    EntityCategory,
     UnitOfEnergy,
     UnitOfTemperature,
     UnitOfTime,
@@ -29,6 +30,7 @@ from .const import (
     VarID,
     WP_STATUS_1_MAP,
     WP_BLOCK_REASON_MAP,
+    WP_FAULT_MAP,
     WP_STATUS_2_MAP,
     VENTILATION_MODE_MAP,
 )
@@ -278,6 +280,8 @@ SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
         key="wp_fault",
         variable_id=VarID.WP_FAULT,
         icon="mdi:alert-circle-outline",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_map=WP_FAULT_MAP,
     ),
     DimplexSensorEntityDescription(
         key="compressor_status",
