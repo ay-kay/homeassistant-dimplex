@@ -222,11 +222,13 @@ VENTILATION_MODE_MAP: Final = {
 VENTILATION_MODE_TO_VALUE: Final = {v: k for k, v in VENTILATION_MODE_MAP.items()}
 
 # Block reason (Sperr_Wp_Wert). Raw value = cloud value * 10 (15 -> 1.5 -> Utility block).
+# Texts follow the cloud's English names; obvious typos/inconsistencies are corrected
+# (checked against the German names, e.g. 55 "Vorlauf Min." -> "Flow min.").
 WP_BLOCK_REASON_MAP: Final = {
     "0": "No block",
     "1": "p0 monitoring",
     "2": "Volume flow",
-    "3": "heat pump",
+    "3": "Heat pump",
     "5": "Function control",
     "7": "System control",
     "8": "Delay",
@@ -248,7 +250,7 @@ WP_BLOCK_REASON_MAP: Final = {
     "24": "Load primary circuit",
     "25": "Block external",
     "26": "Communication fault",
-    "27": "Startup curcuit",
+    "27": "Startup circuit",
     "29": "Inverter block",
     "30": "Max. Block",
     "31": "Warm up",
@@ -259,11 +261,11 @@ WP_BLOCK_REASON_MAP: Final = {
     "38": "Master communication HP",
     "39": "Master fault HP",
     "51": "Heat source min.",
-    "52": "Heat source Max.",
+    "52": "Heat source max.",
     "53": "Return min.",
-    "54": "Return Max.",
-    "55": "Lead time min.",
-    "56": "Flow Max.",
+    "54": "Return max.",
+    "55": "Flow min.",
+    "56": "Flow max.",
     "57": "Propane sensor communication",
 }
 
