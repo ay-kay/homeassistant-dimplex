@@ -85,6 +85,8 @@ Diese Integration wurde getestet mit:
 | `sensor.dimplex_heat_pump_compressor_clocks_heating` | Verdichter Takte Heizung |
 | `sensor.dimplex_heat_pump_compressor_clocks_hotwater` | Verdichter Takte Warmwasser |
 | `sensor.dimplex_heat_pump_compressor_status` | Verdichter Status |
+| `sensor.dimplex_heat_pump_block_reason` | Sperrgrund der Wärmepumpe (z. B. EVU Sperre, Hochdruck) |
+| `sensor.dimplex_heat_pump_fault` | Störung (No fault bzw. Fehlercode, Diagnose) |
 
 ### Steuerung
 
