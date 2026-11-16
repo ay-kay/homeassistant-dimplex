@@ -208,9 +208,6 @@
       },
       "hot_water_status": {
         "name": "Hot Water Status"
-      },
-      "hot_water_active": {
-        "name": "Hot Water Active"
       }
     },
     "switch": {

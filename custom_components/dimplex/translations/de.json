@@ -208,9 +208,6 @@
       },
       "hot_water_status": {
         "name": "Warmwasser-Status"
-      },
-      "hot_water_active": {
-        "name": "Warmwasser aktiv"
       }
     },
     "switch": {
