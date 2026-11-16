@@ -211,6 +211,9 @@
       },
       "environmental_energy_resettable": {
         "name": "Umweltenergie (rücksetzbar)"
+      },
+      "hot_water_status": {
+        "name": "Warmwasser-Status"
       }
     },
     "switch": {
@@ -224,6 +227,15 @@
       },
       "operating_mode": {
         "name": "Betriebsart"
+      }
+    },
+    "water_heater": {
+      "hot_water": {
+        "name": "Warmwasser",
+        "state": {
+          "heat_pump": "Normal",
+          "off": "Gesperrt"
+        }
       }
     }
   }
