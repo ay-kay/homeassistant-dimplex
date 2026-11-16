@@ -28,6 +28,7 @@ from .const import (
     DOMAIN,
     VarID,
     WP_STATUS_1_MAP,
+    WP_BLOCK_REASON_MAP,
     WP_STATUS_2_MAP,
     VENTILATION_MODE_MAP,
 )
@@ -266,6 +267,17 @@ SENSOR_DESCRIPTIONS: tuple[DimplexSensorEntityDescription, ...] = (
         variable_id=VarID.WP_STATUS_1,
         icon="mdi:heat-pump",
         value_map=WP_STATUS_1_MAP,
+    ),
+    DimplexSensorEntityDescription(
+        key="wp_block_reason",
+        variable_id=VarID.WP_BLOCK_REASON,
+        icon="mdi:lock-alert",
+        value_map=WP_BLOCK_REASON_MAP,
+    ),
+    DimplexSensorEntityDescription(
+        key="wp_fault",
+        variable_id=VarID.WP_FAULT,
+        icon="mdi:alert-circle-outline",
     ),
     DimplexSensorEntityDescription(
         key="compressor_status",

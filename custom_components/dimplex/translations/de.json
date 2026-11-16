@@ -173,6 +173,12 @@
       "wp_status": {
         "name": "Wärmepumpe Status"
       },
+      "wp_block_reason": {
+        "name": "Sperrgrund"
+      },
+      "wp_fault": {
+        "name": "Störung"
+      },
       "compressor_status": {
         "name": "Verdichter Status"
       },

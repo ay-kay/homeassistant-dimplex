@@ -173,6 +173,12 @@
       "wp_status": {
         "name": "Heat Pump Status"
       },
+      "wp_block_reason": {
+        "name": "Block Reason"
+      },
+      "wp_fault": {
+        "name": "Fault"
+      },
       "compressor_status": {
         "name": "Compressor Status"
       },

@@ -107,6 +107,9 @@ class VarID:
     WP_STATUS_1: Final = "1586i"
     WP_STATUS_2: Final = "1500d"
     COMPRESSOR_SPEED: Final = "1472i"
+    # Variables addressed by name (the cloud accepts names in "variableIds")
+    WP_BLOCK_REASON: Final = "Sperr_Wp_Wert"
+    WP_FAULT: Final = "Stoerung_Wert"
 
 
 # All variable IDs for bulk reading
@@ -149,6 +152,8 @@ ALL_VARIABLE_IDS: Final = [
     VarID.COMPRESSOR_SPEED,
     VarID.ROOM_TEMP_HK1,
     VarID.OPERATING_MODE,
+    VarID.WP_BLOCK_REASON,
+    VarID.WP_FAULT,
     VarID.HEAT_TOTAL_LOW,
     VarID.HEAT_TOTAL_HIGH,
     VarID.HEAT_HEATING_LOW,
@@ -168,11 +173,21 @@ ALL_VARIABLE_IDS: Final = [
 ]
 
 # Status mappings
+# Raw value = cloud value * 10 (e.g. 10 -> 1.0 -> Defrost). Source: Dimplex Home Cloud
+# /wpm/status_value_translation (Status_Wert). Existing texts are kept for compatibility.
 WP_STATUS_1_MAP: Final = {
+    "0": "Off",
     "1": "Off",
     "2": "Floor Heating",
+    "3": "Swimming pool",
     "4": "Hot Water",
     "5": "Cooling",
+    "6": "Energy opt.",
+    "10": "Defrost",
+    "11": "Flow rate monitoring",
+    "12": "Waiting time",
+    "24": "Delay operating mode switching",
+    "30": "Block",
 }
 
 WP_STATUS_2_MAP: Final = {
@@ -205,3 +220,49 @@ VENTILATION_MODE_MAP: Final = {
 
 # Reverse mapping for setting ventilation mode
 VENTILATION_MODE_TO_VALUE: Final = {v: k for k, v in VENTILATION_MODE_MAP.items()}
+
+# Block reason (Sperr_Wp_Wert). Raw value = cloud value * 10 (15 -> 1.5 -> Utility block).
+WP_BLOCK_REASON_MAP: Final = {
+    "0": "No block",
+    "1": "p0 monitoring",
+    "2": "Volume flow",
+    "3": "heat pump",
+    "5": "Function control",
+    "7": "System control",
+    "8": "Delay",
+    "9": "Pump flow",
+    "10": "Minimum pause time",
+    "11": "Line load",
+    "12": "Switch cycle block",
+    "13": "Domestic hot water reheating",
+    "14": "Renewable",
+    "15": "Utility block",
+    "16": "Soft starter",
+    "17": "Flow",
+    "18": "2nd heat generator",
+    "19": "High pressure",
+    "20": "Low pressure",
+    "21": "Operating limit",
+    "22": "4 way valve",
+    "23": "System limit",
+    "24": "Load primary circuit",
+    "25": "Block external",
+    "26": "Communication fault",
+    "27": "Startup curcuit",
+    "29": "Inverter block",
+    "30": "Max. Block",
+    "31": "Warm up",
+    "32": "Max. operating mode switches",
+    "33": "EVD Init.",
+    "34": "2nd heat generator",
+    "35": "Fault",
+    "38": "Master communication HP",
+    "39": "Master fault HP",
+    "51": "Heat source min.",
+    "52": "Heat source Max.",
+    "53": "Return min.",
+    "54": "Return Max.",
+    "55": "Lead time min.",
+    "56": "Flow Max.",
+    "57": "Propane sensor communication",
+}
